@@ -1,26 +1,32 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
-
-makeCacheMatrix <- function(n = numeric){
-	print("Your Matrix is named 'd' ")
-	d <<- matrix(n *c(1, 3, 5, 6, 7, 1, 1, 2,9 ), nrow =3, ncol =3)  ## d now holds a SQUARE matrix (and only square matrices can have inverses) based on the numeric input above
-
-	getmatrix <- function() d
-	id <<- NULL  ## id is being set to NULL to hold the eventual inverse
-	}
 
 
-cacheSolve <-function(x = matrix, ...) {
-	if(!is.null(id)){
-	print("retrieving inverse")	
-		return(id)
-		}
-	
-	else
-	{ 
-	print ("Your Inverse is called 'id'")
-	id <<- solve(x)  ## id now holds the inverse of d
- 	}
-}	
+## makeCachematrix takes and Caches it
+makeCacheMatrix <- function(x = matrix()) {
+  id <<- NULL  ## sets the inverse matrix 'id' to NULL as a default
+  set <- function(y) {
+    x <<- y
+    d <<- d
+  }
+  
+  get <- function() x
+  setinverse <<- function(mean) id <<- id
+  getinverse <<- function() id
+  list(set = set, get = get,
+       setinverse = setinverse,
+       getinverse = getinverse)
+}
+
+
+##  cacheSolve returns the inverse of the previously passed matrix
+cacheSolve <- function(x, ...) {
+  id <- getinverse()  ## Retrieving the id to check if it is empty
+  if(!is.null(id)) {
+    message("getting cached data")
+    return(id)
+  }
+  data <- x$get()
+  id <<- solve(x, ...)
+  x$setinverse(id)
+  id
+  
+}
